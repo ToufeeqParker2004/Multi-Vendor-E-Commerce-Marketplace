@@ -7,7 +7,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from './collections/Users'
+import { Users } from './collections/Users.ts'
 import { Media } from './collections/Media'
 import { Categories } from './collections/Categories'
 
@@ -20,6 +20,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+
   },
   collections: [Users, Media,Categories],
   editor: lexicalEditor(),
