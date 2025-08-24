@@ -11,6 +11,7 @@ import { Users } from './collections/Users.ts'
 import { Media } from './collections/Media'
 import { Categories } from './collections/Categories'
 import { Products } from './collections/Products.ts'
+import { Tags } from './collections/Tags.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
     },
 
   },
-  collections: [Users, Media,Categories,Products],
+  collections: [Users, Media,Categories,Products,Tags],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
