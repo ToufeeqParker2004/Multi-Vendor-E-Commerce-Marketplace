@@ -14,9 +14,9 @@ interface Props{
 }
 
 export const formatAsCurrency =(value:string)=>{
- const numbericValue = value.replace(/[^0-9.]/g,"");
+ const numericValue = value.replace(/[^0-9.]/g,"");
 
- const parts = numbericValue.split(".");
+ const parts = numericValue.split(".");
 
  const formattedValue =
  parts[0] +(parts.length >1 ? "." + parts[1]?.slice(0,2):"");
@@ -45,14 +45,14 @@ export const PriceFilter =({
   const handleMinPriceChange =(e: ChangeEvent<HTMLInputElement>) =>{
     // Get the raw input vlaue and extract only numberic values
 
-    const numericValue = e.target.value.replace(/[0-9]/g,"");
+    const numericValue = e.target.value.replace(/[^0-9.]/g,"");
     onMinPriceChange(numericValue);
   };
 
     const handleMaxPriceChange =(e: ChangeEvent<HTMLInputElement>) =>{
     // Get the raw input vlaue and extract only numberic values
 
-    const numericValue = e.target.value.replace(/[0-9.]/g,"");
+    const numericValue = e.target.value.replace(/[^0-9.]/g,"");
     onMaxPriceChange(numericValue);
   };
 
