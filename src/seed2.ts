@@ -1,7 +1,7 @@
-import config from '@payload-config'
-import { getPayload } from 'payload'
+import config from '@payload-config';
+import { getPayload } from 'payload';
 
-const categories = [
+const categories =  [
   {
     name: "All",
     slug: "all",
@@ -137,66 +137,55 @@ const categories = [
   },
 ]
 
-const seed = async () =>{
+const seed = async () => {
+  const payload = await getPayload({ config });
 
-    
-    const payload = await getPayload({config});
+  // Create admin user
+  await payload.create({
+    collection: 'users',
+    data: {
+      email: 'admin1@demo.com',
+      password: 'admin123',
+      roles: ['super-admin'],
+      username: 'admin1',
+    },
+  });
 
-    //create admin Tenant 
-
-   const adminTenant = await payload.create({
-    collection:"tenants",
-      data :{
-        name:"admin",
-        slug:"admin",
-        stripeAccountID :"admin"
+  // Create all parent categories in parallel
+  const parentCategoryPromises = categories.map((category) => {
+    return payload.create({
+      collection: 'categories',
+      data: {
+        name: category.name,
+        slug: category.slug,
+        color: category.color,
+        parent: null,
       },
     });
+  });
 
-    //create admin user
+  const createdParentCategories = await Promise.all(parentCategoryPromises);
 
-    await payload.create({
-      collection:"users",
-      data:{
-        email:"admin2@demo.com",
-        password:"admin123",
-        roles :["super-admin"],
-        username:"admin2",
-        tenants :[
-          {
-          tenant: adminTenant.id,
-         },
-       ]
-      },
+  // Now, create all subcategories in parallel
+  const subCategoryPromises = [];
+  createdParentCategories.forEach((parent, index) => {
+    const subcategories = categories[index].subcategories || [];
+    subcategories.forEach((subCategory) => {
+      subCategoryPromises.push(
+        payload.create({
+          collection: 'categories',
+          data: {
+            name: subCategory.name,
+            slug: subCategory.slug,
+            parent: parent.id,
+          },
+        })
+      );
     });
+  });
 
-    for(const category of categories){
-        const parentCategory = await payload.create({
-            collection:"categories",
-            data:{
-                name:category.name,
-                slug: category.slug,
-                color: category.color,
-                parent:null,
-            },
-        });
-
-      for(const subCategory of category.subcategories || [])
-      {
-        await payload.create({
-         collection:"categories",
-         data:{
-           name: subCategory.name,
-           slug:subCategory.slug,
-           parent: parentCategory.id
-         },
-        });
-
-      }
-
-    }
-}
+  await Promise.all(subCategoryPromises);
+};
 
 await seed();
-
 process.exit(0);

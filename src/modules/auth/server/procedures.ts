@@ -43,12 +43,26 @@ register: baseProcedure
     });
  }
 
+     const tenant = await ctx.db.create({
+        collection: "tenants",
+        data :{
+            name : input.username,
+            slug: input.username,
+            stripeAccountID: "test"
+        }
+     })
+
     await ctx.db.create({
         collection:"users",
         data:{
             email: input.email,
             username: input.username,
             password : input.password, //payload automatically hashes
+            tenants:[
+                {
+                tenant: tenant.id,
+                },
+            ],
         },
     });
 
