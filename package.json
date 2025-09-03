@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:fresh": "payload migrate:fresh",
-     "db:seed": "dotenv -- tsx src/seed.ts"
+    "db:seed": "dotenv -- tsx src/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.0",
@@ -74,7 +74,8 @@
     "superjson": "^2.2.2",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^4.0.17"
+    "zod": "^4.0.17",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
