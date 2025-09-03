@@ -6,10 +6,24 @@ import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
+
 import { LinkIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import dynamic from "next/dynamic";
+
+//import { CartButton } from "../components/cart-button";
+
+const CartButton = dynamic(
+    ()=> import("../components/cart-button").then(
+     (mod) => mod.CartButton,   
+    ),
+    {
+        ssr:false,
+        loading : () => <Button disabled className="flex-1 bg-pink-400">Add to cart</Button>
+    }
+);
 
 interface ProductViewProps {
     productId: string;
@@ -25,8 +39,8 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     return (
         <div className="px-4 lg:px-12 py-10">
             <div className="border rounded-sm bg-white overflow-hidden">
-                <div 
-                className="relative aspect-[3.9] border-b"
+                <div
+                    className="relative aspect-[3.9] border-b"
                 >
                     <Image
                         src={data.image?.url || "/placeholder.png"}
@@ -98,12 +112,10 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                         <div className="border-t lg:border-t-0 lg:border-l h-full">
                             <div className="flex flex-col gap-4 p-6 border-b">
                                 <div className="flex flex-row items-center gap-2">
-                                    <Button
-                                        variant="elevated"
-                                        className="flex-1 bg-pink-400"
-                                    >
-                                        Add to cart
-                                    </Button>
+                                    <CartButton
+                                        productId={productId}
+                                        tenantSlug={tenantSlug}
+                                    />
                                     <Button
                                         className="size-12"
                                         variant="elevated"
@@ -126,26 +138,26 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                 <div className="flex items-center justify-between">
                                     <h3 className="text-xl font-medium">Ratings</h3>
                                     <div className="flex items-center gap-x-1 font-medium">
-                                       <StarIcon className="size-4 fill-black"/>
-                                       <p>{5}</p>
-                                       <p className="text-base">{5} ratings</p>
+                                        <StarIcon className="size-4 fill-black" />
+                                        <p>{5}</p>
+                                        <p className="text-base">{5} ratings</p>
                                     </div>
                                 </div>
-                                <div 
-                                className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4"
+                                <div
+                                    className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4"
                                 >
-                                   {[5,4,3,2,1].map((stars) =>(
-                                    <Fragment key={stars}>
-                                      <div className="font-medium">{stars} {stars ===1 ?"stars" :"stars"}</div>
-                                      <Progress 
-                                      value={34}
-                                      className="h-[1lh]"
-                                      />
-                                       <div className="font-medium">
-                                         {34}%
-                                       </div>
-                                    </Fragment>
-                                   ))}
+                                    {[5, 4, 3, 2, 1].map((stars) => (
+                                        <Fragment key={stars}>
+                                            <div className="font-medium">{stars} {stars === 1 ? "stars" : "stars"}</div>
+                                            <Progress
+                                                value={34}
+                                                className="h-[1lh]"
+                                            />
+                                            <div className="font-medium">
+                                                {34}%
+                                            </div>
+                                        </Fragment>
+                                    ))}
                                 </div>
                             </div>
                         </div>
