@@ -6,12 +6,14 @@ import { productsRouter } from '@/modules/products/server/procedure';
 import { tagsRouter } from '@/modules/tags/server/procedure';
 import { tenantsRouter } from '@/modules/tenants/server/procedure';
 import { checkoutRouter } from '@/modules/checkout/server/procedure';
+import { libraryRouter } from '@/modules/library/server/procedure';
 
 
 export const appRouter = createTRPCRouter({
   auth:authRouter,
   tags :tagsRouter,
   tenants:tenantsRouter,
+   library: libraryRouter,
   checkout: checkoutRouter,
   products: productsRouter,
   categories : categoriesRouter
