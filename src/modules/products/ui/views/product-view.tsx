@@ -79,7 +79,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                             </div>
 
                             <div className="hidden lg:flex px-6 py-4 items-center justify-center">
-                                <div className="flex items-center gap-1">
+                                <div className="flex  items-center gap-1">
                                     <StarRating
                                         rating={3}
                                         iconClassName="size-4" />
