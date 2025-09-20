@@ -22,7 +22,7 @@ interface StarRatingProps{
 
 
   return(
-    <div className={cn("flex, items-center gap-x-1", className)}>
+    <div className={cn("flex items-center gap-x-1", className)}>
        {Array.from({length:MAX_RATING}).map((_,index)=>(
         <StarIcon
         key={index}
