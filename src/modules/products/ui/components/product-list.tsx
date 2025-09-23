@@ -58,9 +58,9 @@ return(
             imageUrl={product.image?.url}
             tenantSlug={product.tenant?.slug}
             tenantImageURL={product.tenant?.image?.url}
-            reviewRating={3}
+            reviewRating={product.reviewRating}
             reviewCount={5}
-            price={product.Price}
+            price={product.reviewCount}
             />
         ))}
     </div>
