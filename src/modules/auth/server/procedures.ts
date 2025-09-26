@@ -6,6 +6,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { loginSchema, registerSchema } from "../schemas";
 import { generateAuthCookies } from "../utils";
+import { stripe } from "@/lib/stripe";
 
 
 
@@ -43,12 +44,21 @@ register: baseProcedure
     });
  }
 
+    const account = await stripe.accounts.create({});
+
+    if(!account){
+        throw new TRPCError({
+            code:"BAD_REQUEST",
+            message:"Failed to create Stripr account",
+        })
+    }
+
      const tenant = await ctx.db.create({
         collection: "tenants",
         data :{
             name : input.username,
             slug: input.username,
-            stripeAccountID: "test"
+            stripeAccountID: account.id,
         }
      })
 
