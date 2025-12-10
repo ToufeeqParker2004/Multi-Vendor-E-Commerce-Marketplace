@@ -2,7 +2,7 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import {multiTenantPlugin} from "@payloadcms/plugin-multi-tenant"
+import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant"
 
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -14,7 +14,7 @@ import { Media } from './collections/Media'
 import { Categories } from './collections/Categories'
 import { Products } from './collections/Products.ts'
 import { Tags } from './collections/Tags.ts'
-import {Config} from "./payload-types";
+import { Config } from "./payload-types";
 import { Tenants } from './collections/Tenants.ts'
 import { Orders } from './collections/Orders.ts'
 import { Reviews } from './collections/Reviews.ts'
@@ -29,13 +29,13 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components:{
-      beforeNavLinks:["@/components/stripe-verify#StripeVerify"]
+    components: {
+      beforeNavLinks: ["@/components/stripe-verify#StripeVerify"]
     }
 
   },
-  
-  collections: [Users, Media,Categories,Products,Tags,Tenants,Orders,Reviews],
+
+  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -48,11 +48,12 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     multiTenantPlugin<Config>({
-      collections:{
-        products :{},
+      collections: {
+        products: {},
+      
       },
-      tenantsArrayField:{
-        includeDefaultField:false,
+      tenantsArrayField: {
+        includeDefaultField: false,
       },
       userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),

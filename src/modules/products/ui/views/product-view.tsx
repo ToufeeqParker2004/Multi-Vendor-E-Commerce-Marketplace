@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import {RichText} from "@payloadcms/richtext-lexical/react";
 
 import { CheckCheckIcon, CheckIcon, LinkIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
@@ -35,7 +36,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     const trpc = useTRPC();
     const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
 
-    const [isCopied,setisCopied] = useState(false)
+    const [isCopied, setisCopied] = useState(false)
 
     return (
         <div className="px-4 lg:px-12 py-10">
@@ -83,8 +84,8 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                 <div className="flex  items-center gap-1">
                                     <StarRating
                                         rating={data.reviewRating}
-                                        iconClassName="size-4" 
-                                        />
+                                        iconClassName="size-4"
+                                    />
                                     <p className="text-base font-medium">
                                         {data.reviewCount} ratings
                                     </p>
@@ -103,8 +104,8 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                         </div>
 
                         <div className="p-6">
-                            {data.description ? (
-                                <p>{data.description}</p>
+                      {data.description ? (
+                               <RichText data={data.description}/>
                             ) : (
                                 <p className="font-medium text-muted-foreground italic">
                                     No decription provided
@@ -128,18 +129,18 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                     <Button
                                         className="size-12"
                                         variant="elevated"
-                                        onClick={() => { 
+                                        onClick={() => {
                                             setisCopied(true);
                                             navigator.clipboard.writeText(window.location.href);
                                             toast.success("URL copied to clipboard")
 
-                                            setTimeout(()=>{
+                                            setTimeout(() => {
                                                 setisCopied(false)
-                                            },1000)
+                                            }, 1000)
                                         }}
                                         disabled={isCopied}
                                     >
-                                        {isCopied ? <CheckIcon/> :<LinkIcon />}
+                                        {isCopied ? <CheckIcon /> : <LinkIcon />}
                                     </Button>
                                 </div>
 
@@ -179,6 +180,26 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+export const ProductViewSkeleton = () => {
+    return (
+        <div className="px-4 lg:px-12 py-10">
+            <div className="border rounded-sm bg-white overflow-hidden">
+                <div
+                    className="relative aspect-[3.9] border-b"
+                >
+                    <Image
+                        src={ "/placeholder.png"}
+                        alt="Placeholder"
+                        fill
+                        className="object-cover"
+                    />
                 </div>
             </div>
         </div>
