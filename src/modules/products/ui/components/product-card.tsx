@@ -1,4 +1,3 @@
-import Rect from "react"
 
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { StarIcon } from "lucide-react";

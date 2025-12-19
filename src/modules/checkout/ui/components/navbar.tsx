@@ -4,9 +4,6 @@ import { generateTenantUrl } from "@/lib/utils";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { ShoppingCartIcon } from "lucide-react";
-
-
 
 
 interface Props {

@@ -8,7 +8,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 
-import { CheckCheckIcon, CheckIcon, LinkIcon, StarIcon } from "lucide-react";
+import {  CheckIcon, LinkIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useState } from "react";

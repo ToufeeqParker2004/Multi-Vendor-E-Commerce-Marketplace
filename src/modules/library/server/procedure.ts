@@ -2,7 +2,7 @@
 import z from "zod";
 
 import { DEFAULT_LIMIT } from "@/constants";
-import { Category, Media, Tenant } from "@/payload-types";
+import {  Media, Tenant } from "@/payload-types";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 

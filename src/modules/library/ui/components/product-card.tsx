@@ -1,6 +1,4 @@
-import Rect from "react"
 
-import { formatCurrency } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

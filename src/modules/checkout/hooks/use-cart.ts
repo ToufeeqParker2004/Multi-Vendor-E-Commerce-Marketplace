@@ -36,7 +36,7 @@ export const useCart = (tenantSlug :string) =>{
 
       const handleRemoveProduct = useCallback((productId : string)=>{
      removeProduct(tenantSlug,productId);
-    },[addProduct,tenantSlug])
+    },[removeProduct,tenantSlug])
 
     return{
         productIds,
