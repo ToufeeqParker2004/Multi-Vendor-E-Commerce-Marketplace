@@ -39,7 +39,7 @@ export const Categories =({
 
     useEffect(()=>{
        const calculateVisible =() =>{
-        if (!containerRef.current || !measureRef.current) return;
+        if (!containerRef.current || !measureRef.current || !viewAllRef.current) return;
 
        const containerWidth = containerRef.current.offsetWidth;
        const viewAllWidth = viewAllRef.current.offsetWidth;
